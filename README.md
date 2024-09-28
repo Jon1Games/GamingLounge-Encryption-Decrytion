@@ -1,8 +1,10 @@
 # Gaming Lounge Encrytion Decrytion (GLED)
 
+Both private and public keys are provited for test purpose
+
 ## Requirements
 
-- Python
+- ### Python
 - rsa `pip install rsa`<br>
   or install via rquirements
 
@@ -10,7 +12,13 @@
 pip install -r requirements.txt
 ```
 
-Both private and public keys are provited for test purpose
+## Usage
+
+Create key pair
+
+```
+python .\main.py .\TestFolder\
+```
 
 Encrypt single file
 
