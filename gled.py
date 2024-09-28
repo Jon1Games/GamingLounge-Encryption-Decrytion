@@ -1,6 +1,7 @@
 import rsa
 import os
 import sys
+from pathlib import Path
 
 def open_pub(path):
     with open(path, "rb") as f:
@@ -34,7 +35,7 @@ if goal == "-?" or goal == "--?" or goal == "?" or goal == "help" or goal == "-h
     print("-d <file/folder> <private key> | Decrypt the file/folder with the private key")
     isValid = False
 elif goal == "-g":
-    path = sys.argv[2]
+    path = Path(sys.argv[2])
     if os.path.exists(path) and isFolder(path):
         name = input("Name: ")
         bit = int(input("Bits: "))
@@ -45,8 +46,8 @@ elif goal == "-g":
         print("This path does not exist or isn´t an folder!")
 
 elif goal == "-e":
-    path = sys.argv[2]
-    key = sys.argv[3]
+    path = Path(sys.argv[2])
+    key = Path(sys.argv[3])
     if os.path.exists(path):
         if os.path.exists(key):
             if isFolder(key):
@@ -64,8 +65,8 @@ elif goal == "-e":
         print("This path(File/s) does not exist!")
 
 elif goal == "-d":
-    path = sys.argv[2]
-    key = sys.argv[3]
+    path = Path(sys.argv[2])
+    key = Path(sys.argv[3])
     if os.path.exists(path):
         if os.path.exists(key):
             if isFolder(key):
