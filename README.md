@@ -20,7 +20,7 @@ pip install -r requirements.txt
 
 ## Cron exmaple
 
-Enxryption every 5 Minutes, then moves the logs into an log archive for better overview and to prevent double encrypting.
+Encryption every 5 Minutes, then moves the logs into an log archive for better overview and to prevent double encrypting.
 
 ```
 */5 * * * * python gled.py -e <logs_folder> <public_key> && mv <logs_folder> <logs_archiv_folder>
