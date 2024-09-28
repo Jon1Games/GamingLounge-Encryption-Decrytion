@@ -17,29 +17,33 @@ pip install -r requirements.txt
 Create key pair
 
 ```
-python .\main.py .\TestFolder\
+python .\gled.py .\TestFolder\
 ```
 
 Encrypt single file
 
 ```
-python .\main.py .\TestFolder\TestFile .\public
+python .\gled.py .\TestFolder\TestFile .\public
 ```
 
 Decrypt single file
 
 ```
-python .\main.py .\TestFolder\TestFile .\private
+python .\gled.py .\TestFolder\TestFile .\private
 ```
 
 Encrypt all files in an folder
 
 ```
-python .\main.py .\TestFolder\ .\public
+python .\gled.py .\TestFolder\ .\public
 ```
 
 Decrypt all files in an folder
 
 ```
-python .\main.py .\TestFolder\ .\private
+python .\gled.py .\TestFolder\ .\private
 ```
+
+|python .\gled.py -g <destination> | Generate key pair and save as destination|
+|python .\gled.py -e <file/folder> <public key> | Encrypt the file/folder with the public key|
+|python .\gled.py -d <file/folder> <private key> | Decrypt the file/folder with the private key|
