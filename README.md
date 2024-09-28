@@ -3,7 +3,7 @@
 ## Requirements
 
 - Python
-- rsa `pip install rsa`
+- rsa `pip install rsa`<br>
   or install via rquirements
 
 ```
