@@ -23,7 +23,7 @@ def decrypt(file, priv):
     
 def isFolder(path):
     if os.path.exists(path):
-        if path.endswith("\\"):
+        if path.endswith("/") or path.endswith("\\"):
             return True
         else:
             return False
@@ -36,12 +36,12 @@ if goal == "-?" or goal == "--?" or goal == "?" or goal == "help" or goal == "-h
     isValid = False
 elif goal == "-g":
     path = Path(sys.argv[2])
-    if os.path.exists(path) and isFolder(path):
+    if os.path.exists(path) and isFolder(sys.argv[2]):
         name = input("Name: ")
         bit = int(input("Bits: "))
         public, private = rsa.newkeys(bit)
-        open(path + name + "_private.pem", "wb").write(private.save_pkcs1("PEM"))
-        open(path + name + "_public.pem", "wb").write(public.save_pkcs1("PEM"))
+        open(sys.argv[2] + name + "-private.pem", "wb").write(private.save_pkcs1("PEM"))
+        open(sys.argv[2] + name + "-public.pem", "wb").write(public.save_pkcs1("PEM"))
     else:
         print("This path does not exist or isn´t an folder!")
 
@@ -50,13 +50,13 @@ elif goal == "-e":
     key = Path(sys.argv[3])
     if os.path.exists(path):
         if os.path.exists(key):
-            if isFolder(key):
+            if isFolder(sys.argv[3]):
                 print("A key cannot be a folder!")
             else:
-                if isFolder(path):
-                    files = os.listdir(path)
+                if isFolder(sys.argv[2]):
+                    files = os.listdir(sys.argv[2])
                     for f in files:
-                        encrypt(path + f, open_pub(key))
+                        encrypt(sys.argv[2] + f, open_pub(key))
                 else:
                     encrypt(path, open_pub(key))
         else:
@@ -69,13 +69,13 @@ elif goal == "-d":
     key = Path(sys.argv[3])
     if os.path.exists(path):
         if os.path.exists(key):
-            if isFolder(key):
+            if isFolder(sys.argv[3]):
                 print("A key cannot be a folder!")
             else:
-                if isFolder(path):
-                    files = os.listdir(path)
+                if isFolder(sys.argv[2]):
+                    files = os.listdir(sys.argv[2])
                     for f in files:
-                        decrypt(path + f, open_priv(key))
+                        decrypt(sys.argv[2] + f, open_priv(key))
                 else:
                     decrypt(path, open_priv(key))
         else:
