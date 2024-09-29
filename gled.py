@@ -103,11 +103,7 @@ elif mode == 2:
                     for f in files:
                         if f.endswith(".gled"):
                             continue
-<<<<<<< HEAD
                         elif fnmatch.fnmatch(f, filter):
-=======
-                        elif f.endswith(filter):
->>>>>>> ba1b1839e53382226cc0e790e3c1d4fc6ce36220
                             encrypt(encryptO + f, open_pub(keyO))
                 else:
                     encrypt(encryptO, open_pub(keyO))
