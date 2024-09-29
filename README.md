@@ -12,11 +12,13 @@ pip install -r requirements.txt
 
 ## Usage
 
-| Command                                       | Usage                                        |
-| --------------------------------------------- | -------------------------------------------- |
-| python gled.py -g <destination>               | Generate key pair and save as destination    |
-| python gled.py -e <file/folder> <public_key>  | Encrypt the file/folder with the public key  |
-| python gled.py -d <file/folder> <private_key> | Decrypt the file/folder with the private key |
+| Command          | Usage                                             |
+| ---------------- | ------------------------------------------------- |
+| -g <destination> | Generate key pair and save as destination         |
+| -e <file/folder> | Encrypt the file/folder with the public key       |
+| -d <file/folder> | Decrypt the file/folder with the private key      |
+| -k <key_file>    | Key path                                          |
+| -f <filter_end>  | use filter, which only apply to the file name end |
 
 ## Cron exmaple
 
