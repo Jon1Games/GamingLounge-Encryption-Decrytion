@@ -12,13 +12,15 @@ pip install -r requirements.txt
 
 ## Usage
 
-| Command          | Usage                                             |
-| ---------------- | ------------------------------------------------- |
-| -g <destination> | Generate key pair and save as destination         |
-| -e <file/folder> | Encrypt the file/folder with the public key       |
-| -d <file/folder> | Decrypt the file/folder with the private key      |
-| -k <key_file>    | Key path                                          |
-| -f <filter_end>  | use filter, which only apply to the file name end |
+Files that ends with ".gled" cannot be encrypted.
+
+| Command          | Usage                                                                                                 |
+| ---------------- | ----------------------------------------------------------------------------------------------------- |
+| -g <destination> | Generate key pair and save as destination                                                             |
+| -e <file/folder> | Encrypt the file/folder with the public key(The new file name ends with is ".gled")                   |
+| -d <file/folder> | Decrypt the file/folder with the private key(Only files that end with ".gled" and matches the filter) |
+| -k <key_file>    | Key path                                                                                              |
+| -f <filter_end>  | Only uses files with spezific pattern, example: "Test\*.txt"                                          |
 
 ## Cron exmaple
 
@@ -27,4 +29,5 @@ Encryption every 5 Minutes, then moves the logs into an log archive for better o
 ```
 */5 * * * * python gled.py -e <logs_folder> -k <public_key>
 ```
+
 All files will be encryptet and get the new name: PREVIUS_FILE_NAME.gled

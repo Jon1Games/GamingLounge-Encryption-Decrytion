@@ -1,6 +1,7 @@
 import rsa
 import os
 import sys
+import fnmatch
 
 def open_pub(path):
     with open(path, "rb") as f:
@@ -41,9 +42,9 @@ decryptO = ""
 # Checking for help
 if sys.argv[1] == "-?" or sys.argv[1] == "--?" or sys.argv[1] == "?" or sys.argv[1] == "help" or sys.argv[1] == "-help" or sys.argv[1] == "--help":
     print("-g <Folder>        | Generate key pair and save as destination")
-    print("-e <file/folder>   | Encrypt the file/folder with the public key(The new file end is \".gled\")")
-    print("-d <file/folder>   | Decrypt the file/folder with the private key(Only files that end with \".gled\" and filter uses on the name before \"gled\")")
-    print("-f <Filter>        | Check if file endwith, example:\"txt\", \".txt\", \"log.txt\"")
+    print("-e <file/folder>   | Encrypt the file/folder with the public key(The new file name ends with is \".gled\")")
+    print("-d <file/folder>   | Decrypt the file/folder with the private key(Only files that end with \".gled\" and matches the filter)")
+    print("-f <Pattern>       | Only uses files with spezific pattern, example: \"Test*.txt\"")
     print("-k <key_file>      | Path to key file")
 
 # Collecting arguments
@@ -67,6 +68,12 @@ for i in range(1, len(sys.argv)):
         skip = True
     elif sys.argv[i] == "-k":
         keyO = sys.argv[i + 1]
+        skip = True
+    elif sys.argv[i] == "-test":
+        if fnmatch.fnmatch(sys.argv[i+1], "t*"):
+            print("true")
+        else:
+            print("false")
         skip = True
     else:
         print(sys.argv)
@@ -94,7 +101,9 @@ elif mode == 2:
                 if isFolder(encryptO):
                     files = os.listdir(encryptO)
                     for f in files:
-                        if f.endswith(filter):
+                        if f.endswith(".gled"):
+                            continue
+                        elif fnmatch.fnmatch(f, filter):
                             encrypt(encryptO + f, open_pub(keyO))
                 else:
                     encrypt(encryptO, open_pub(keyO))
@@ -112,7 +121,7 @@ elif mode == 3:
                 if isFolder(decryptO):
                     files = os.listdir(decryptO)
                     for f in files:
-                        if f.endswith(filter + ".gled"):
+                        if fnmatch.fnmatch(f, filter + ".gled"):
                             decrypt(decryptO + f, open_priv(keyO))
                 else:
                     decrypt(decryptO, open_priv(keyO))
