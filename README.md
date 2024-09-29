@@ -17,10 +17,10 @@ Files that ends with ".gled" cannot be encrypted.<br>
 | Argument | Usage |
 | ---------------- | ------------------------------------------------- |
 | -g <destination> | Generate key pair and save as destination |
-| -e <file/folder> | Encrypt the file/folder with the public key |
-| -d <file/folder> | Decrypt the file/folder with the private key |
+| -e <file/folder> | Encrypt the file/folder with the public key, ignores ".gled" files |
+| -d <file/folder> | Decrypt the file/folder with the private key, generated files end with ".gled" |
 | -k <key_file> | Key path |
-| -f <filter_end> | use filter, which only apply to the file name end |
+| -f <filter_end> | Only uses files with spezific pattern, example: \"Test\*.txt\" |
 
 ## Cron exmaple
 
