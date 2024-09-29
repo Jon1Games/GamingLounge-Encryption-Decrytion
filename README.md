@@ -25,5 +25,6 @@ pip install -r requirements.txt
 Encryption every 5 Minutes, then moves the logs into an log archive for better overview and to prevent double encrypting.
 
 ```
-*/5 * * * * python gled.py -e <logs_folder> <public_key> && mv <logs_folder> <logs_archiv_folder>
+*/5 * * * * python gled.py -e <logs_folder> -k <public_key>
 ```
+All files will be encryptet and get the new name: PREVIUS_FILE_NAME.gled
