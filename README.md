@@ -12,6 +12,8 @@ pip install -r requirements.txt
 
 ## Usage
 
+Files that ends with ".gled" cannot be encrypted.
+
 | Command          | Usage                                             |
 | ---------------- | ------------------------------------------------- |
 | -g <destination> | Generate key pair and save as destination         |
@@ -27,4 +29,5 @@ Encryption every 5 Minutes, then moves the logs into an log archive for better o
 ```
 */5 * * * * python gled.py -e <logs_folder> -k <public_key>
 ```
+
 All files will be encryptet and get the new name: PREVIUS_FILE_NAME.gled

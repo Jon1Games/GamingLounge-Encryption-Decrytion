@@ -94,7 +94,9 @@ elif mode == 2:
                 if isFolder(encryptO):
                     files = os.listdir(encryptO)
                     for f in files:
-                        if f.endswith(filter):
+                        if f.endswith(".gled"):
+                            continue
+                        elif f.endswith(filter):
                             encrypt(encryptO + f, open_pub(keyO))
                 else:
                     encrypt(encryptO, open_pub(keyO))
