@@ -42,7 +42,7 @@ decryptO = ""
 if sys.argv[1] == "-?" or sys.argv[1] == "--?" or sys.argv[1] == "?" or sys.argv[1] == "help" or sys.argv[1] == "-help" or sys.argv[1] == "--help":
     print("-g <Folder>        | Generate key pair and save as destination")
     print("-e <file/folder>   | Encrypt the file/folder with the public key(The new file end is \".gled\")")
-    print("-d <file/folder>   | Decrypt the file/folder with the private key(Only files that end with \".gled\")")
+    print("-d <file/folder>   | Decrypt the file/folder with the private key(Only files that end with \".gled\" and filter uses on the name before \"gled\")")
     print("-f <Filter>        | Check if file endwith, example:\"txt\", \".txt\", \"log.txt\"")
     print("-k <key_file>      | Path to key file")
 
@@ -112,7 +112,7 @@ elif mode == 3:
                 if isFolder(decryptO):
                     files = os.listdir(decryptO)
                     for f in files:
-                        if f.endswith(filter):
+                        if f.endswith(filter + ".gled"):
                             decrypt(decryptO + f, open_priv(keyO))
                 else:
                     decrypt(decryptO, open_priv(keyO))
