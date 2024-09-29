@@ -1,7 +1,6 @@
 import rsa
 import os
 import sys
-from pathlib import Path
 
 def open_pub(path):
     with open(path, "rb") as f:
@@ -14,12 +13,14 @@ def open_priv(path):
 def encrypt(file, pub):
     original_text = open(file, "rb").read()
     text = rsa.encrypt(original_text, pub)
-    open(file, "wb").write(text)
+    open(file + ".gled", "wb").write(text)
+    os.remove(file)
 
 def decrypt(file, priv):
     original_text = open(file, "rb").read()
     text = rsa.decrypt(original_text, priv).decode()
-    open(file, "w").write(text)
+    open(file[:-5], "w").write(text)
+    os.remove(file)
     
 def isFolder(path):
     if os.path.exists(path):
@@ -27,61 +28,97 @@ def isFolder(path):
             return True
         else:
             return False
+        
+# Variables
+skip = False
+mode = 0
+filter = ""
+keyO = "" 
+generateO = ""
+encryptO = ""
+decryptO = ""
 
-goal = sys.argv[1]
-if goal == "-?" or goal == "--?" or goal == "?" or goal == "help" or goal == "-help" or goal == "--help":
-    print("-g <destination> | Generate key pair and save as destination")
-    print("-e <file/folder> <public key> | Encrypt the file/folder with the public key")
-    print("-d <file/folder> <private key> | Decrypt the file/folder with the private key")
-    isValid = False
-elif goal == "-g":
-    path = Path(sys.argv[2])
-    if os.path.exists(path) and isFolder(sys.argv[2]):
-        name = input("Name: ")
-        bit = int(input("Bits: "))
-        public, private = rsa.newkeys(bit)
-        open(sys.argv[2] + name + "-private.pem", "wb").write(private.save_pkcs1("PEM"))
-        open(sys.argv[2] + name + "-public.pem", "wb").write(public.save_pkcs1("PEM"))
+# Checking for help
+if sys.argv[1] == "-?" or sys.argv[1] == "--?" or sys.argv[1] == "?" or sys.argv[1] == "help" or sys.argv[1] == "-help" or sys.argv[1] == "--help":
+    print("-g <Folder>        | Generate key pair and save as destination")
+    print("-e <file/folder>   | Encrypt the file/folder with the public key(The new file end is \".gled\")")
+    print("-d <file/folder>   | Decrypt the file/folder with the private key(Only files that end with \".gled\")")
+    print("-f <Filter>        | Check if file endwith, example:\"txt\", \".txt\", \"log.txt\"")
+    print("-k <key_file>      | Path to key file")
+
+# Collecting arguments
+for i in range(1, len(sys.argv)):
+    if skip == True:
+        skip = False
+    elif sys.argv[i] == "-g":
+        generateO = sys.argv[i+1]
+        skip = True
+        mode = 1
+    elif sys.argv[i] == "-e":
+        encryptO = sys.argv[i+1]
+        skip = True
+        mode = 2
+    elif sys.argv[i] == "-d":
+        decryptO = sys.argv[i+1]
+        skip = True
+        mode = 3
+    elif sys.argv[i] == "-f":
+        filter = sys.argv[i + 1]
+        skip = True
+    elif sys.argv[i] == "-k":
+        keyO = sys.argv[i + 1]
+        skip = True
     else:
-        print("This path does not exist or isn´t an folder!")
+        print(sys.argv)
 
-elif goal == "-e":
-    path = Path(sys.argv[2])
-    key = Path(sys.argv[3])
-    if os.path.exists(path):
-        if os.path.exists(key):
-            if isFolder(sys.argv[3]):
+# 
+if mode == 1:
+    if os.path.exists(generateO):
+        if isFolder(generateO):
+            name = input("Name: ")
+            bit = int(input("Bits: "))
+            public, private = rsa.newkeys(bit)
+            open(generateO + name + "-private.pem", "wb").write(private.save_pkcs1("PEM"))
+            open(generateO + name + "-public.pem", "wb").write(public.save_pkcs1("PEM"))
+        else:
+            print("This is not an folder.")
+    else:
+        print("This path does not exists.")
+
+elif mode == 2:
+    if os.path.exists(encryptO):
+        if os.path.exists(keyO):
+            if isFolder(keyO):
                 print("A key cannot be a folder!")
             else:
-                if isFolder(sys.argv[2]):
-                    files = os.listdir(sys.argv[2])
+                if isFolder(encryptO):
+                    files = os.listdir(encryptO)
                     for f in files:
-                        encrypt(sys.argv[2] + f, open_pub(key))
+                        if f.endswith(filter):
+                            encrypt(encryptO + f, open_pub(keyO))
                 else:
-                    encrypt(path, open_pub(key))
+                    encrypt(encryptO, open_pub(keyO))
         else:
             print("This path(Key) does not exists!")
     else:
         print("This path(File/s) does not exist!")
 
-elif goal == "-d":
-    path = Path(sys.argv[2])
-    key = Path(sys.argv[3])
-    if os.path.exists(path):
-        if os.path.exists(key):
-            if isFolder(sys.argv[3]):
+elif mode == 3:
+    if os.path.exists(decryptO):
+        if os.path.exists(keyO):
+            if isFolder(keyO):
                 print("A key cannot be a folder!")
             else:
-                if isFolder(sys.argv[2]):
-                    files = os.listdir(sys.argv[2])
+                if isFolder(decryptO):
+                    files = os.listdir(decryptO)
                     for f in files:
-                        decrypt(sys.argv[2] + f, open_priv(key))
+                        if f.endswith(filter):
+                            decrypt(decryptO + f, open_priv(keyO))
                 else:
-                    decrypt(path, open_priv(key))
+                    decrypt(decryptO, open_priv(keyO))
         else:
             print("This path(Key) does not exists!")
     else:
         print("This path(File/s) does not exist!")
-
 else:
     print("use -? fpr help")
