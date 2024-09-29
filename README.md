@@ -12,7 +12,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-Files that ends with ".gled" cannot be encrypted.
+Files that ends with ".gled" cannot be encrypted.<br>
 `python gled.py `
 | Argument | Usage |
 | ---------------- | ------------------------------------------------- |
