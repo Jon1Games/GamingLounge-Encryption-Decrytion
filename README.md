@@ -13,7 +13,8 @@ pip install -r requirements.txt
 ## Usage
 
 Files that ends with ".gled" cannot be encrypted.
-| Command | Usage |
+`python gled.py `
+| Argument | Usage |
 | ---------------- | ------------------------------------------------- |
 | -g <destination> | Generate key pair and save as destination |
 | -e <file/folder> | Encrypt the file/folder with the public key |
