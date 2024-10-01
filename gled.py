@@ -22,13 +22,6 @@ def decrypt(file, priv):
     text = rsa.decrypt(original_text, priv).decode()
     open(file[:-5], "w").write(text)
     os.remove(file)
-    
-def isFolder(path):
-    if os.path.exists(path):
-        if path.endswith("/") or path.endswith("\\"):
-            return True
-        else:
-            return False
         
 # Variables
 skip = False
@@ -76,12 +69,12 @@ for i in range(1, len(sys.argv)):
             print("false")
         skip = True
     else:
-        print(sys.argv)
+        print("Argument not found\"", sys.argv[i], "\", use -? for more information.")
 
 # 
 if mode == 1:
     if os.path.exists(generateO):
-        if isFolder(generateO):
+        if os.path.isdir(generateO):
             name = input("Name: ")
             bit = int(input("Bits: "))
             public, private = rsa.newkeys(bit)
@@ -95,11 +88,13 @@ if mode == 1:
 elif mode == 2:
     if os.path.exists(encryptO):
         if os.path.exists(keyO):
-            if isFolder(keyO):
+            if os.path.isdir(keyO):
                 print("A key cannot be a folder!")
             else:
-                if isFolder(encryptO):
+                if os.path.isdir(encryptO):
                     files = os.listdir(encryptO)
+                    if filter == "":
+                        filter = "*"
                     for f in files:
                         if f.endswith(".gled"):
                             continue
@@ -115,11 +110,13 @@ elif mode == 2:
 elif mode == 3:
     if os.path.exists(decryptO):
         if os.path.exists(keyO):
-            if isFolder(keyO):
+            if os.path.isdir(keyO):
                 print("A key cannot be a folder!")
             else:
-                if isFolder(decryptO):
+                if os.path.isdir(decryptO):
                     files = os.listdir(decryptO)
+                    if filter == "":
+                        filter = "*"
                     for f in files:
                         if fnmatch.fnmatch(f, filter + ".gled"):
                             decrypt(decryptO + f, open_priv(keyO))
