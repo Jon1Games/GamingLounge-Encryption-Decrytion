@@ -27,6 +27,6 @@ python gled.py [Arguments]
 | -k <key_file> | Key path |
 | -f <filter_end> | Only uses files with spezific pattern, example: \"Test\*.txt\" |
 
-TODO:
-Syncron encryption7decryptoin of files
-Asyncron encryption7decryption of Syncron-Key
+TODO:<br>
+Syncron encryption/decryptoin of files<br>
+Asyncron encryption/decryption of Syncron-Key<br>
