@@ -26,3 +26,7 @@ python gled.py [Arguments]
 | -d <file/folder> | Decrypt the file/folder with the private key, generated files end with ".gled" |
 | -k <key_file> | Key path |
 | -f <filter_end> | Only uses files with spezific pattern, example: \"Test\*.txt\" |
+
+TODO:
+Syncron encryption7decryptoin of files
+Asyncron encryption7decryption of Syncron-Key
